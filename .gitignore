@@ -1,1 +1,5 @@
 versions/*
+.next/*
+nome_modules/*
+package.json
+package-lock.json
