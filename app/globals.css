@@ -193,3 +193,17 @@ ul {
   text-align: center;
   margin-top: 3rem;
 }
+
+#archive-header a {
+  text-decoration: none;
+  color: #b0b0a6;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#archive-header a:hover,
+#archive-header a.active {
+  color: #e5e5e1;
+}
+
