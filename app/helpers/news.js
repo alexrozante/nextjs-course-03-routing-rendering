@@ -1,7 +1,13 @@
 import { DUMMY_NEWS } from "@/dummy-news";
 
-export function getAllNews() {
-  return DUMMY_NEWS;
+import sqlite from "better-sqlite3";
+
+const db = sqlite('data.db');
+
+export async function getAllNews() {
+  const news = db.prepare("SELECT * FROM news").all();
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  return news;
 }
 
 export function getLatestNews() {
