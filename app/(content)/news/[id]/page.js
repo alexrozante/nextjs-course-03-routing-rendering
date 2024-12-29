@@ -1,16 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNewsItem } from "@/app/helpers/news";
+import { Suspense } from "react";
 
-export default async function NewsPage({ params }) {
-
-  const id = (await params).id
-  const newsItem = await getNewsItem(id)
-
+async function NewsItem({id}) {
+  const newsItem = await getNewsItem(id);
   if (!newsItem) {
     notFound();
   }
-  
   return (
     <article className="news-article">
       <header>
@@ -25,4 +22,13 @@ export default async function NewsPage({ params }) {
       </main>
     </article>
   );
+}
+
+export default async function NewsPage({ params }) {
+  const id = (await params).id
+  return (
+    <Suspense fallback={<p>Loading news item...</p>}>
+      <NewsItem id={id} />
+    </Suspense>
+  )  
 }

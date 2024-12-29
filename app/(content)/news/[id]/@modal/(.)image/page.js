@@ -1,14 +1,13 @@
 import ModalBackdrop from "@/components/modal-backdrop";
 import { notFound } from "next/navigation";
 import { getNewsItem } from "@/app/helpers/news";
+import { Suspense } from "react";
 
-export default async function ImagePage({ params }) {
-
-  const newsItem = await getNewsItem(params.id)
+async function ImagePreview({id}) {
+  const newsItem = await getNewsItem(id);
   if (!newsItem) {
     notFound();
   }
-
   return (
     <>
       <ModalBackdrop>
@@ -19,5 +18,14 @@ export default async function ImagePage({ params }) {
         </dialog>
       </ModalBackdrop>
     </>
+  );
+}
+
+export default async function ImagePage({ params }) {
+  const newsId = (await params).id;
+  return (
+    <Suspense fallback={<p>Loading image...</p>}>
+      <ImagePreview id={newsId} />
+    </Suspense>
   );
 }
