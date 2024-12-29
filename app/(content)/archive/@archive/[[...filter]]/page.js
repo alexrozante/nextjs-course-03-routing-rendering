@@ -18,8 +18,10 @@ export default async function FilterNewsPage({ params }) {
   let newsList;
   if (filters) {
     if (year) {
-      links = getAvailableNewsMonths(year);
-      newsList = month ? getNewsForYearAndMonth(year, month) : getNewsForYear(year);
+      links = getAvailableNewsMonths(+year);
+      newsList = month ? getNewsForYearAndMonth(+year, +month) : getNewsForYear(+year);
+      if (!newsList || newsList.length < 1)
+        throw new Error('Invalid filter.');
     }
   }
 
