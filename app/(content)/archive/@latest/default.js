@@ -15,8 +15,8 @@ import NewsList from "@/components/news-list";
  * Para estas situações NextJS define uma página fallback "default.js" que é renredizada 
  * quando uma subrota não é suportada. 
  */
-export default function LatestNewsPage() {
-  const latest = getLatestNews()
+export default async function LatestNewsPage() {
+  const latest = await getLatestNews()
   return (
     <>
       <h2>

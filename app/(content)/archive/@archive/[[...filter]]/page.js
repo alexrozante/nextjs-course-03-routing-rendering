@@ -1,5 +1,4 @@
 import {
-  getAllNews,
   getAvailableNewsMonths,
   getAvailableNewsYears,
   getNewsForYear,
@@ -13,13 +12,19 @@ export default async function FilterNewsPage({ params }) {
 
   let year = filters?.[0];
   let month = filters?.[1];
-
-  let links = getAvailableNewsYears();
+  
+  let links = await getAvailableNewsYears();
+  
   let newsList;
+
   if (filters) {
     if (year) {
-      links = getAvailableNewsMonths(+year);
-      newsList = month ? getNewsForYearAndMonth(+year, +month) : getNewsForYear(+year);
+      links = await getAvailableNewsMonths(year);
+      if (month)
+        newsList = await getNewsForYearAndMonth(year, month)
+      else
+        newsList = await getNewsForYear(year);
+
       if (!newsList || newsList.length < 1)
         throw new Error('Invalid filter.');
     }
